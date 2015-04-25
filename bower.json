@@ -1,0 +1,25 @@
+{
+  "name": "hornet",
+  "version": "0.0.1",
+  "homepage": "https://github.com/MarlinDoo/hornet",
+  "authors": [
+    "MarlinDoo"
+  ],
+  "description": "A Website and user system(MEAN)",
+  "keywords": [
+    "User",
+    "system"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4"
+  }
+}
