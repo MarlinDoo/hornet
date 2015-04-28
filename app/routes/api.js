@@ -2,6 +2,8 @@ var bodyParser = require('body-parser'); 	// get body-parser
 var User       = require('../models/user');
 var jwt        = require('jsonwebtoken');
 var config     = require('../../config');
+var _ = require('underscore');
+
 
 // super secret for creating tokens
 var superSecret = config.secret;
@@ -112,9 +114,15 @@ module.exports = function(app, express) {
 		.post(function(req, res) {
 			
 			var user = new User();		// create a new instance of the User model
-			user.name = req.body.name;  // set the users name (comes from the request)
-			user.username = req.body.username;  // set the users username (comes from the request)
-			user.password = req.body.password;  // set the users password (comes from the request)
+			//user.name = req.body.name;  // set the users name (comes from the request)
+			//user.sex = req.body.sex;
+			//user.username = req.body.username;  // set the users username (comes from the request)
+			//user.password = req.body.password;  // set the users password (comes from the request)
+			//user.phone = req.body.phone; // 手机号码
+			//user.summary = req.body.summary; //职位
+			//user.address = req.body.address; //地址
+
+			_.extend(user,req.body);
 
 			user.save(function(err) {
 				if (err) {
@@ -136,7 +144,6 @@ module.exports = function(app, express) {
 
 			User.find({}, function(err, users) {
 				if (err) res.send(err);
-
 				// return the users
 				res.json(users);
 			});
@@ -164,8 +171,12 @@ module.exports = function(app, express) {
 
 				// set the new user information if it exists in the request
 				if (req.body.name) user.name = req.body.name;
+				if (req.body.sex) user.sex = req.body.sex;
 				if (req.body.username) user.username = req.body.username;
 				if (req.body.password) user.password = req.body.password;
+				if (req.body.phone) user.phone = req.body.phone;
+				if (req.body.summary) user.summary = req.body.summary;
+				if (req.body.address) user.address = req.body.address;
 
 				// save the user
 				user.save(function(err) {
