@@ -10,7 +10,11 @@ var nodemon   = require('gulp-nodemon');
 
 var BROWSER_SYNC_RELOAD_DELAY = 500;
 var browserSync = require('browser-sync');
+
+var reload = browserSync.reload;
+
 gulp.task('css', function() {
+  console.log('这里走了么');
   return gulp.src('public/assets/css/style.less')
     .pipe(less())
     .pipe(minifyCSS())
@@ -40,7 +44,7 @@ var called = false;
 gulp.task('nodemon', function(cb) {
   nodemon({
     script: 'server.js',
-    ext: 'js less html'
+    ext: 'js html'
   })
   .on('start',function(){
     if (!called) { cb(); }
@@ -56,11 +60,12 @@ gulp.task('nodemon', function(cb) {
 });
 
 
-gulp.task('serve',['nodemon'],function(){
+gulp.task('serve',['css','nodemon'],function(){
   browserSync({
     notify: false,
     proxy: 'http://127.0.0.1:8080',
     port:4000
   });
+  gulp.watch('public/assets/css/style.less',['css',reload]);
 });
 gulp.task('default', ['serve']);
