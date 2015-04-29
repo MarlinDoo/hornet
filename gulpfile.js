@@ -14,7 +14,6 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
 gulp.task('css', function() {
-  console.log('这里走了么');
   return gulp.src('public/assets/css/style.less')
     .pipe(less())
     .pipe(minifyCSS())
