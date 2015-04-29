@@ -7,10 +7,10 @@ var jshint    = require('gulp-jshint');
 var concat    = require('gulp-concat');
 var uglify    = require('gulp-uglify');
 var nodemon   = require('gulp-nodemon');
-// define a task called css
-gulp.task('css', function() {
 
-  // grab the less file, process the LESS, save to style.css
+var BROWSER_SYNC_RELOAD_DELAY = 500;
+var browserSync = require('browser-sync');
+gulp.task('css', function() {
   return gulp.src('public/assets/css/style.less')
     .pipe(less())
     .pipe(minifyCSS())
@@ -18,15 +18,13 @@ gulp.task('css', function() {
     .pipe(gulp.dest('public/assets/css'));
 
 });
-
-// task to lint, minify, and concat frontend files
 gulp.task('scripts', function() {
-  return gulp.src(['public/app/*.js', 'public/app/**/*.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(concat('all.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('public/dist'));
+return gulp.src(['public/app/*.js', 'public/app/**/*.js'])
+          .pipe(jshint())
+          .pipe(jshint.reporter('default'))
+          .pipe(concat('all.js'))
+          .pipe(uglify())
+          .pipe(gulp.dest('public/dist'));
 });
 
 // task to watch
@@ -38,17 +36,31 @@ gulp.task('watch', function() {
 });
 
 // the nodemon task
-gulp.task('nodemon', function() {
+var called = false;
+gulp.task('nodemon', function(cb) {
   nodemon({
     script: 'server.js',
     ext: 'js less html'
   })
-    // .on('start', ['watch'])
-    // .on('change', ['watch'])
-    .on('restart', function() {
-      console.log('Restarted!');
-    });
+  .on('start',function(){
+    if (!called) { cb(); }
+    called = true;
+  })
+  .on('restart', function() {
+    setTimeout(function reload() {
+      browserSync.reload({
+        stream: false
+      });
+    }, BROWSER_SYNC_RELOAD_DELAY);
+  });
 });
 
-// defining the main gulp task
-gulp.task('default', ['nodemon']);
+
+gulp.task('serve',['nodemon'],function(){
+  browserSync({
+    notify: false,
+    proxy: 'http://127.0.0.1:8080',
+    port:4000
+  });
+});
+gulp.task('default', ['serve']);
