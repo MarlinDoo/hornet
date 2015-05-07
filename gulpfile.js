@@ -58,6 +58,25 @@ gulp.task('nodemon', function(cb) {
   });
 });
 
+//测试发送邮件的内容，可用
+//gitHub https://github.com/andris9/Nodemailer
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport();
+gulp.task('email',function(){
+  transporter.sendMail({
+    from: 'zhailei2011@gmail.com',
+    to: '31665431@qq.com',
+    subject: '测试下标题',
+    text: '这个是什么内容啊'
+  },function(error,info){
+    if(error){
+      console.log(error)
+    }else{
+      console.log('Message sent: Success');
+    }
+  });
+})
+//测试发送邮件的内容，可用
 
 gulp.task('serve',['css','nodemon'],function(){
   browserSync({
