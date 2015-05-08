@@ -3,6 +3,7 @@ var User       = require('../models/user');
 var jwt        = require('jsonwebtoken');
 var config     = require('../../config');
 var _ = require('underscore');
+var nodemailer = require('nodemailer');
 
 // super secret for creating tokens
 var superSecret = config.secret;
@@ -103,17 +104,19 @@ module.exports = function(app, express) {
 	apiRouter.route('/users')
 		.post(function(req, res) {
 			var user = new User();
-			_.extend(user,req.body);
-			user.save(function(err) {
-				if (err) {
-					// duplicate entry
-					if (err.code == 11000) 
-						return res.json({ success: false, message: 'A user with that username already exists. '});
-					else 
-						return res.send(err);
-				}
-				res.json({ message: 'User created!' });
-			});
+			var transporter = nodemailer.createTransport();
+		  transporter.sendMail({
+		    from: 'zhailei2011@gmail.com',
+		    to: req.body["username"],
+		    subject: '邀请您加入通讯录',
+		    text: '这个是什么内容啊'
+		  },function(error,info){
+		    if(error){
+		      res.json({ error: 'User created!' });
+		    }else{
+		      res.json({ message: 'User created!' });
+		    }
+		  });
 		})
 		.get(function(req, res) {
 			User.find({}, function(err, users) {

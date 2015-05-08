@@ -53,23 +53,15 @@ angular.module('userCtrl', ['userService'])
 	})
 	.controller('register', function ($scope,User) {
 		this.data = {
-			name:'',
-			username:'',
-			password:'',
-			confrimPassword:''
+			username:''
 		};
 		var self = this;
-
 		this.post = function(){
-			if(self.data['password'] == self.data['confrimPassword']){
-				User.createUser(self.data)
-					.success(function (data) {
-						self.processing = false;
-						self.userData = {};
-						self.message = data.message;
-					});
-			}else{
-				self.error = '密码不一致'
-			}
+			User.createUser(self.data)
+				.success(function (data) {
+					self.processing = false;
+					self.userData = {};
+					self.message = data.message;
+				});
 		}
 	});
