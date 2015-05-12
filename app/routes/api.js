@@ -3,8 +3,14 @@ var User       = require('../models/user');
 var Token 		 = require('../models/Token');
 var jwt        = require('jsonwebtoken');
 var config     = require('../../config');
-var _ = require('underscore');
+var _ 				 = require('underscore');
 var nodemailer = require('nodemailer');
+<<<<<<< HEAD
+=======
+var avatar     = require('../lib/tietuku.io');
+
+// super secret for creating tokens
+>>>>>>> origin/master
 var superSecret = config.secret;
 module.exports = function(app, express) {
 	var apiRouter = express.Router();
@@ -14,16 +20,16 @@ module.exports = function(app, express) {
 	  }).select('name username password').exec(function(err, user) {
 	    if (err) throw err;
 	    if (!user) {
-	      res.json({ 
-	      	success: false, 
-	      	message: 'Authentication failed. User not found.' 
+	      res.json({
+	      	success: false,
+	      	message: 'Authentication failed. User not found.'
 	    	});
 	    } else if (user) {
 	      var validPassword = user.comparePassword(req.body.password);
 	      if (!validPassword) {
-	        res.json({ 
-	        	success: false, 
-	        	message: 'Authentication failed. Wrong password.' 
+	        res.json({
+	        	success: false,
+	        	message: 'Authentication failed. Wrong password.'
 	      	});
 	      } else {
 	        var token = jwt.sign({
@@ -38,7 +44,12 @@ module.exports = function(app, express) {
 	          message: 'Enjoy your token!',
 	          token: token
 	        });
+<<<<<<< HEAD
 	      }   
+=======
+	      }
+
+>>>>>>> origin/master
 	    }
 	  });
 	});
@@ -52,13 +63,13 @@ module.exports = function(app, express) {
 	  // decode token
 	  if(token){
 	    // verifies secret and checks exp
-	    jwt.verify(token, superSecret, function(err, decoded) {      
+	    jwt.verify(token, superSecret, function(err, decoded) {
 	      if (err) {
-	        res.status(403).send({ 
-	        	success: false, 
-	        	message: 'Failed to authenticate token.' 
-	    	});  	   
-	      } else { 
+	        res.status(403).send({
+	        	success: false,
+	        	message: 'Failed to authenticate token.'
+	    	});
+	      } else {
 	        // if everything is good, save to request for use in other routes
 	        req.decoded = decoded;
 	        next(); // make sure we go to the next routes and don't stop here
@@ -75,8 +86,14 @@ module.exports = function(app, express) {
    	 	//});
 	  }
 	});
+<<<<<<< HEAD
+=======
+
+	// test route to make sure everything is working
+	// accessed at GET http://localhost:8080/api
+>>>>>>> origin/master
 	apiRouter.get('/', function(req, res) {
-		res.json({ message: 'hooray! welcome to our api!' });	
+		res.json({ message: 'hooray! welcome to our api!' });
 	});
 	apiRouter.route('/users')
 		.post(function(req, res) {
@@ -155,6 +172,15 @@ module.exports = function(app, express) {
 				res.json({ message: 'Successfully deleted' });
 			});
 		});
+
+	apiRouter.route('/users/:user_id/avatar')
+    .post(function(req, res) {
+      avatar.upload('/Users/Marlin/tmp/2.png', function(err, user){
+        res.json({ message: 'Update avatar success' });
+      });
+      // res.json({ message: 'Update avatar success' });
+    });
+
 	apiRouter.get('/me', function(req, res) {
 		res.send(req.decoded);
 	});
