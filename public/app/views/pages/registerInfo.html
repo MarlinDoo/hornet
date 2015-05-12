@@ -1,4 +1,4 @@
-<div class="row col-md-6 col-md-offset-3">
+<div class="row col-md-6 col-md-offset-3" ng-if = "register.data.showView">
 	<div class="jumbotron">
 		<h1>Sign In</h1>
 		<form ng-submit="register.post()">
@@ -18,11 +18,9 @@
 			<div class="alert alert-danger" ng-if="register.error">
 				{{ register.error }}
 			</div>
-			<button type="submit" class="btn btn-block btn-primary">
-				<span ng-if="!login.processing">Login</span>
-				<span ng-if="login.processing" class="spinner"><span class="glyphicon glyphicon-repeat"></span></span>
+			<button type="submit" class="btn btn-block btn-primary" ng-disabled="register.data.btnDisabled">
+				<span ng-bind="register.data.btnValue"></span>
 			</button>
-
 		</form>
 	</div>
 </div>

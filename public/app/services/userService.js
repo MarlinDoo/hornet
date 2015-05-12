@@ -16,8 +16,14 @@ angular.module('userService', [])
     userFactory.delete = function(id) {
       return $http.delete('/api/users/' + id);
     };
-    userFactory.createUser = function(userData){
-      return $http.post('/api/users', userData);
+    userFactory.register = function(userData){
+      return $http.post('/api/registerEmail', userData);
+    }
+    userFactory.getRegisterInfo = function(id){
+      return $http.get('/api/register/'+id);
+    }
+    userFactory.registerSave = function(userData){
+      return $http.post('/api/register/',userData);
     }
     return userFactory;
   });

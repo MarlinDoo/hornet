@@ -9,16 +9,6 @@ angular.module('app.routes', ['ngRoute'])
 				controller  : 'mainController',
 				controllerAs: 'login'
 			})
-			.when('/register',{
-				templateUrl:"app/views/pages/register.html",
-				controller :'registerEmail',
-				controllerAs: 'register'
-			})
-			.when('/register/:tokenId',{
-				templateUrl:"app/views/pages/registerInfo.html",
-				controller :'registerInfo',
-				controllerAs: 'register'
-			})
 			.when('/users', {
 				templateUrl: 'app/views/pages/users/all.html',
 				controller: 'userController',
@@ -33,6 +23,16 @@ angular.module('app.routes', ['ngRoute'])
 				templateUrl: 'app/views/pages/users/single.html',
 				controller: 'userEdit',
 				controllerAs: 'user'
+			})
+			.when('/register',{
+				templateUrl:"app/views/pages/register.html",
+				controller :'registerEmail',
+				controllerAs: 'register'
+			})
+			.when('/register/:tokenId',{
+				templateUrl:"app/views/pages/registerInfo.html",
+				controller :'registerInfo',
+				controllerAs: 'register'
 			});
 		$locationProvider.html5Mode(true);
 	});

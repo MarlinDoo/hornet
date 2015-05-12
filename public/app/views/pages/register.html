@@ -2,36 +2,19 @@
 	<div class="jumbotron">
 		<h1>Sign In</h1>
 		<form ng-submit="register.post()">
-
-			<!-- <div class="form-group">
-				<label>Name</label>
-				<input type="text" class="form-control" ng-model="register.data.name">
-			</div> -->
-
 			<div class="form-group">
 				<label>Username</label>
-				<input type="email" class="form-control" ng-model="register.data.username">
+				<input type="email" class="form-control" ng-model="register.data.username" ng-change="register.userNameChange()">
 			</div>
-
-			<!-- <div class="form-group">
-				<label>Password</label>
-				<input type="password" class="form-control" ng-model="register.data.password">
-			</div>
-
-			<div class="form-group">
-				<label>ConfrimPassword</label>
-				<input type="password" class="form-control" ng-model="register.data.confrimPassword">
-			</div> -->
-
 			<div class="alert alert-danger" ng-if="register.error">
 				{{ register.error }}
 			</div>
-
-			<button type="submit" class="btn btn-block btn-primary">
-				<span ng-if="!login.processing">Login</span>
-				<span ng-if="login.processing" class="spinner"><span class="glyphicon glyphicon-repeat"></span></span>
+			<div class="alert alert-danger" ng-if="register.success">
+				{{ register.success }}
+			</div>
+			<button type="submit" class="btn btn-block btn-primary" ng-disabled="register.data.btnDisabled">
+				<span ng-bind = "register.data.loginBtnVal"></span>
 			</button>
-
 		</form>
 	</div>
 </div>
