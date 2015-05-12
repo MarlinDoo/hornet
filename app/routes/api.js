@@ -112,7 +112,7 @@ module.exports = function(app, express) {
   apiRouter.route('/registerEmail')
   	.post(function(req, res) {
 			var user = new User();
-			Token.find({username:'31665431@qq.com'},function(error,list){
+			Token.find({username: req.body["username"]},function(error,list){
 				if(list.length !=0){
 					res.json({error: '已存在用户'});					
 				}else{
@@ -138,7 +138,7 @@ module.exports = function(app, express) {
 				    text: 'http://localhost:4000/register/'+token['_id']
 				  },function(error,info){
 				    if(error){
-				      res.json({ error: 'User created!' });
+				      res.json({ error:error });
 				    }else{
 				      res.json(_.extend({ message: 'User created!'},list));
 				    }
