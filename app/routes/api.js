@@ -5,12 +5,7 @@ var jwt        = require('jsonwebtoken');
 var config     = require('../../config');
 var _ 				 = require('underscore');
 var nodemailer = require('nodemailer');
-<<<<<<< HEAD
-=======
 var avatar     = require('../lib/tietuku.io');
-
-// super secret for creating tokens
->>>>>>> origin/master
 var superSecret = config.secret;
 module.exports = function(app, express) {
 	var apiRouter = express.Router();
@@ -44,12 +39,7 @@ module.exports = function(app, express) {
 	          message: 'Enjoy your token!',
 	          token: token
 	        });
-<<<<<<< HEAD
 	      }   
-=======
-	      }
-
->>>>>>> origin/master
 	    }
 	  });
 	});
@@ -86,12 +76,6 @@ module.exports = function(app, express) {
    	 	//});
 	  }
 	});
-<<<<<<< HEAD
-=======
-
-	// test route to make sure everything is working
-	// accessed at GET http://localhost:8080/api
->>>>>>> origin/master
 	apiRouter.get('/', function(req, res) {
 		res.json({ message: 'hooray! welcome to our api!' });
 	});
