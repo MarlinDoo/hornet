@@ -50,8 +50,10 @@ angular.module('userCtrl', ['userService'])
 					});
 			};
 		}
-	})
-	.controller('register', function ($scope,User) {
+	});
+
+angular.module('register',['userService'])
+	.controller('registerEmail',function(User){
 		this.data = {
 			username:''
 		};
@@ -64,4 +66,7 @@ angular.module('userCtrl', ['userService'])
 					self.message = data.message;
 				});
 		}
+	})
+	.controller('registerInfo',function(User,$routeParams){
+		var token = $routeParams;
 	});
