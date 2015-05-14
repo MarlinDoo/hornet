@@ -19,7 +19,7 @@ angular.module('userCtrl', ['userService'])
 				});
 		};
 	})
-	.controller('userEdit', function (User, $routeParams, $scope) {
+	.controller('userEdit', function (User, $routeParams, $scope, $q) {
 		var vm = this;
 		if ($routeParams['user_id']) {
 			vm.type = 'edit';
@@ -39,14 +39,24 @@ angular.module('userCtrl', ['userService'])
 			};
 			$scope.selectImage = function( element ) {
 				console.log('vm.selectImage' )
-				$scope.$apply(function(scope) {
+				$scope.$apply( function(scope) {
+					function readFile(file) {
+            var deferred = $q.defer();
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                deferred.resolve(e.target.result);
+            };
+            reader.onerror = function(e) {
+                deferred.reject(e);
+            };
+            reader.readAsDataURL(file);
+            return deferred.promise;
+          }
 		      console.log('files:', element.files);
-		      // Turn the FileList object into an Array
-	        scope.files = []
-	        for (var i = 0; i < element.files.length; i++) {
-	          scope.files.push(element.files[i])
-	        }
-		      scope.progressVisible = false
+		      readFile( element.files[0] )
+		      	.then(function(values) {
+              console.log('xxx', values)
+            });
 	      });
 			}
 		} else {
