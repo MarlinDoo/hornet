@@ -11,6 +11,9 @@ var avatar     = require('../lib/tietuku.io');
 var superSecret = config.secret;
 module.exports = function(app, express) {
 	var apiRouter = express.Router();
+
+	console.log(process);
+
 	apiRouter.post('/authenticate', function(req, res) {
 	  User.findOne({
 	    username: req.body.username
