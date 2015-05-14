@@ -127,6 +127,8 @@ angular.module('userCtrl', ['userService'])
 			btnDisabled:false,
 			password:''
 		};
+		console.log(this)
+		$scope.data = this.data
 		User.getRegisterInfo(id)
 			.success(function(data){
 				if(data['errorcode']){
@@ -140,14 +142,13 @@ angular.module('userCtrl', ['userService'])
 					self.data.showView = true;
 				}
 			});
-		// $scope.$watch('data',function(newValue,oldValue){
-		// 	console.log(newValue,oldValue,'123');
-		// 	if(self.data['password'] && self.data['password']!=""&& self.data['confrimPassword'] && self.data['confrimPassword']!='' && self.data['password']== self.data['confrimPassword']){
-		// 		self.data['btnDisabled'] = false
-		// 	}else{
-		// 		self.data['btnDisabled'] = true
-		// 	}
-		// })
+		$scope.$watch('data',function(newValue,oldValue){
+			if(self.data['password'] && self.data['password']!=""&& self.data['confrimPassword'] && self.data['confrimPassword']!='' && self.data['password']== self.data['confrimPassword']){
+				self.data['btnDisabled'] = false
+			}else{
+				self.data['btnDisabled'] = true
+			}
+		},true)
 		this.post = function(){
 			self.data['btnDisabled'] = true
 			self.data['btnValue'] = '注册中……'

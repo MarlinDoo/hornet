@@ -11,6 +11,9 @@ var avatar     = require('../lib/tietuku.io');
 var superSecret = config.secret;
 module.exports = function(app, express) {
 	var apiRouter = express.Router();
+
+	console.log(process);
+
 	apiRouter.post('/authenticate', function(req, res) {
 	  User.findOne({
 	    username: req.body.username
@@ -119,7 +122,7 @@ module.exports = function(app, express) {
   apiRouter.route('/registerEmail')
   	.post(function(req, res) {
 			var user = new User();
-			Token.find({username:'31665431@qq.com'},function(error,list){
+			Token.find({username: req.body["username"]},function(error,list){
 				if(list.length !=0){
 					res.json({error: '已存在用户'});
 				}else{
