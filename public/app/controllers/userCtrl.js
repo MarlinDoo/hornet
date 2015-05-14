@@ -37,28 +37,69 @@ angular.module('userCtrl', ['userService'])
 						vm.message = data.message;
 					});
 			};
+			// edit avatar
 			$scope.selectImage = function( element ) {
-				console.log('vm.selectImage' )
+				// console.log('vm.selectImage' )
 				$scope.$apply( function(scope) {
 					function readFile(file) {
             var deferred = $q.defer();
             var reader = new FileReader();
             reader.onload = function(e) {
-                deferred.resolve(e.target.result);
+              deferred.resolve(e.target.result);
             };
             reader.onerror = function(e) {
-                deferred.reject(e);
+              deferred.reject(e);
             };
             reader.readAsDataURL(file);
             return deferred.promise;
           }
-		      console.log('files:', element.files);
 		      readFile( element.files[0] )
 		      	.then(function(values) {
-              console.log('xxx', values)
+              $scope.imageSrc = values;
+              /*setTimeout( function(){
+              	ias = $('img.edit-avatar-img').imgAreaSelect({
+						      fadeSpeed: 400, handles: true, instance: true,
+						      imageWidth: 500, imageHeight: 750
+						    });
+						    ias.setOptions({ show: true, x1: 199, y1: 149, x2: 200, y2: 150 });
+				        ias.animateSelection(125, 75, 275, 225, 'slow');
+              }, 10 )*/
+              vm.ias = $('img.edit-avatar-img').imgAreaSelect({
+					      fadeSpeed: 400, handles: true, instance: true,
+					      imageWidth: 500, imageHeight: 750
+					    });
+					    vm.ias.setOptions({ show: true, x1: 199, y1: 149, x2: 200, y2: 150 });
+			        vm.ias.animateSelection(125, 75, 275, 225, 'slow');
+			        console.log('x1', vm.ias)
             });
 	      });
 			}
+			// get Avatar data (format base64)
+			vm.getAvatarData = function (){
+				vm.ias = $('img.edit-avatar-img').data('imgAreaSelect');
+				var area = vm.ias.getSelection(false);
+	      crop_canvas = document.createElement('canvas');
+	      crop_canvas.width = area.width;
+	      crop_canvas.height = area.height;
+	      crop_canvas.getContext('2d').drawImage($('img.edit-avatar-img').get(0), area.x1, area.y1, area.width, area.height, 0, 0, area.width, area.height);
+	      return crop_canvas.toDataURL( "image/png" );
+	      // window.open(crop_canvas.toDataURL("image/png"));
+			}
+			// Save Avatar Data
+			vm.saveAvatar = function () {
+				vm.processing = true;
+				vm.message = '';
+				vm.userData.avatar = vm.getAvatarData();
+
+				// console.log('vm.userData', vm.userData);return;
+
+				User.update($routeParams.user_id, vm.userData)
+					.success(function (data) {
+						vm.processing = false;
+						vm.userData = {};
+						vm.message = data.message;
+					});
+			};
 		} else {
 			vm.type = 'create';
 			vm.saveUser = function () {

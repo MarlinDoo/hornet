@@ -2,6 +2,11 @@
 @purple: #993399;
 @red: #cc3333;
 
+@gray-darker:            #333333 !default;
+@gray-dark:              #666666 !default;
+@gray:                   #999999 !default;
+@gray-light:             #cccccc !default;
+@gray-lighter:           #f7f7f7 !default;
 /* MAIN
 ====================== */
 //body  {
@@ -10,3 +15,53 @@
 //  border-top:20px solid @red;
 //  padding-top:50px;
 //}
+
+.edit-avatar-imgc{
+  min-height:300px;
+  border:1px solid @gray-light;
+}
+.edit-avatar-img{
+  max-width: 300px;
+  max-height:500px;
+}
+
+/*
+ * imgAreaSelect default style
+ */
+
+.imgareaselect-border1 {
+  background: url(border-v.gif) repeat-y left top;
+}
+
+.imgareaselect-border2 {
+    background: url(border-h.gif) repeat-x left top;
+}
+
+.imgareaselect-border3 {
+    background: url(border-v.gif) repeat-y right top;
+}
+
+.imgareaselect-border4 {
+    background: url(border-h.gif) repeat-x left bottom;
+}
+
+.imgareaselect-border1, .imgareaselect-border2,
+.imgareaselect-border3, .imgareaselect-border4 {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.imgareaselect-handle {
+    background-color: #fff;
+    border: solid 1px #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.imgareaselect-outer {
+    background-color: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.imgareaselect-selection {}

@@ -2,7 +2,7 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 var bcrypt 		 = require('bcrypt-nodejs');
 
-// user schema 
+// user schema
 var UserSchema   = new Schema({
 	name: String,
 	sex:String,
@@ -10,6 +10,7 @@ var UserSchema   = new Schema({
 	password: { type: String, required: true, select: false },
 	phone:Number,
 	summary:String,
+	avatar:String,
 	address:String
 });
 
