@@ -41,7 +41,7 @@ module.exports = function(app, express) {
 	          message: 'Enjoy your token!',
 	          token: token
 	        });
-	      }   
+	      }
 	    }
 	  });
 	});
@@ -103,18 +103,25 @@ module.exports = function(app, express) {
 		});
 
 	apiRouter.route('/users/:user_id/avatar')
-    .post(function(req, res) {
+		.get( function(req, res) {
+			User.findById(req.params.user_id, function(err, user) {
+				if (err) res.send(err);
+				res.json(user);
+			});
+		})
+    /*.post(function(req, res) {
       avatar.upload('/Users/Marlin/tmp/2.png', function(err, user){
+      	console.log('err',err)
+      	console.log('user',user)
         res.json({ message: 'Update avatar success' });
       });
-      // res.json({ message: 'Update avatar success' });
-    });
+    });*/
   apiRouter.route('/registerEmail')
   	.post(function(req, res) {
 			var user = new User();
 			Token.find({username:'31665431@qq.com'},function(error,list){
 				if(list.length !=0){
-					res.json({error: '已存在用户'});					
+					res.json({error: '已存在用户'});
 				}else{
 					var a = jwt.sign({
 	        	username: user.username
@@ -138,7 +145,7 @@ module.exports = function(app, express) {
 				    text: 'http://localhost:4000/register/'+token['_id']
 				  },function(error,info){
 				    if(error){
-				      res.json({ error: 'User created!' });
+				      res.json({ error: error });
 				    }else{
 				      res.json(_.extend({ message: 'User created!'},list));
 				    }
@@ -179,7 +186,7 @@ module.exports = function(app, express) {
   	.get(function(req,res){
   		Token.findById(req.params.registerId, function(err, user) {
 				if (err){
-					res.send(err);	
+					res.send(err);
 				}else{
 					var a = jwt.decode(user['key']);
 					if(a['exp']<parseInt(moment().valueOf()/1000)){
@@ -191,9 +198,9 @@ module.exports = function(app, express) {
 						if(user['register'] == true){
 							res.json({error:'此用户名已经注册',errorcode:'registerTrue'});
 						}else{
-							res.json(user);	
+							res.json(user);
 						}
-						
+
 					}
 				}
 			});

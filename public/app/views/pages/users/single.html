@@ -4,7 +4,7 @@
 </div>
 
 <form class="form-horizontal" ng-submit="user.saveUser()">
-	
+
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Name</label>
 		<div class="col-sm-6">
@@ -22,8 +22,8 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Sex</label>
 		<div class="col-sm-6">
-			<input type="radio" name="Sex" value="男" ng-model="user.userData.sex"/><span>男</span>
-			<input type="radio" name="Sex" value="女" ng-model="user.userData.sex"/><span>女</span>
+			<input type="radio" name="Gender" value="male" ng-model="user.userData.gender"/><span>男</span>
+			<input type="radio" name="Gender" value="female" ng-model="user.userData.gender"/><span>女</span>
 		</div>
 	</div>
 
@@ -66,7 +66,7 @@
 
 <div class="row show-hide-message" ng-show="user.message">
 	<div class="col-sm-6 col-sm-offset-2">
-		
+
 		<div class="alert alert-info">
 			{{ user.message }}
 		</div>

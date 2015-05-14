@@ -19,7 +19,7 @@ angular.module('userCtrl', ['userService'])
 				});
 		};
 	})
-	.controller('userEdit', function (User, $routeParams) {
+	.controller('userEdit', function (User, $routeParams, $scope) {
 		var vm = this;
 		if ($routeParams['user_id']) {
 			vm.type = 'edit';
@@ -37,6 +37,18 @@ angular.module('userCtrl', ['userService'])
 						vm.message = data.message;
 					});
 			};
+			$scope.selectImage = function( element ) {
+				console.log('vm.selectImage' )
+				$scope.$apply(function(scope) {
+		      console.log('files:', element.files);
+		      // Turn the FileList object into an Array
+	        scope.files = []
+	        for (var i = 0; i < element.files.length; i++) {
+	          scope.files.push(element.files[i])
+	        }
+		      scope.progressVisible = false
+	      });
+			}
 		} else {
 			vm.type = 'create';
 			vm.saveUser = function () {
@@ -51,6 +63,29 @@ angular.module('userCtrl', ['userService'])
 			};
 		}
 	})
+	/*.controller('avatarEdit', function (User, $routeParams) {
+		var vm = this;
+		if ($routeParams['user_id']) {
+			vm.type = 'edit';
+			User.get($routeParams.user_id)
+				.success(function (data) {
+					vm.userData = data;
+				});
+			vm.saveUser = function () {
+				vm.processing = true;
+				vm.message = '';
+				User.update($routeParams.user_id, vm.userData)
+					.success(function (data) {
+						vm.processing = false;
+						vm.userData = {};
+						vm.message = data.message;
+					});
+			};
+			vm.file_changed = function(element) {
+				console.log('vm.file_changed');
+			}
+		}
+	})*/
 	.controller('registerEmail',function(User,AuthToken){
 		var self = this;
 		this.data = {
@@ -61,7 +96,7 @@ angular.module('userCtrl', ['userService'])
 		var re = /\w+((-w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]{2,}/ ;
 		this.userNameChange = function(){
 			if(re.test(self.data['username'])){
-				self.data['btnDisabled'] = false;	
+				self.data['btnDisabled'] = false;
 			}else{
 				self.data['btnDisabled'] = true;
 			}

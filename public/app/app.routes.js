@@ -24,6 +24,11 @@ angular.module('app.routes', ['ngRoute'])
 				controller: 'userEdit',
 				controllerAs: 'user'
 			})
+			.when('/users/:user_id/avatar', {
+				templateUrl: 'app/views/pages/users/avatar.html',
+				controller: 'userEdit',
+				controllerAs: 'user'
+			})
 			.when('/register',{
 				templateUrl:"app/views/pages/register.html",
 				controller :'registerEmail',
