@@ -101,7 +101,6 @@ module.exports = function(app, express) {
 				res.json({ message: 'Successfully deleted' });
 			});
 		});
-
 	apiRouter.route('/users/:user_id/avatar')
 		.get( function(req, res) {
 			User.findById(req.params.user_id, function(err, user) {
