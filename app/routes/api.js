@@ -135,13 +135,13 @@ module.exports = function(app, express) {
 					token.save(function(error,list){
 						if(!error){
 						}
-					})
+					});
 					var transporter = nodemailer.createTransport();
 				  transporter.sendMail({
 				    from: 'zhailei2011@gmail.com',
 				    to: req.body["username"],
 				    subject: '邀请您加入通讯录',
-				    text: 'http://localhost:4000/register/'+token['_id']
+				    text: req.headers.origin+'/register/'+token['_id']
 				  },function(error,info){
 				    if(error){
 				      res.json({ error: error });
@@ -211,4 +211,4 @@ module.exports = function(app, express) {
 		res.send(req.decoded);
 	});
 	return apiRouter;
-};
+}
