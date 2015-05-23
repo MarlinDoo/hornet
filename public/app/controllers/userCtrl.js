@@ -195,7 +195,7 @@ angular.module('userCtrl', ['userService'])
 		this.post = function(){
 			self.data['btnDisabled'] = true
 			self.data['btnValue'] = '注册中……'
-			User.registerSave({id:id,username:self.data['username'],password:self.data['password']})
+			User.registerSave({id:id,name:self.data['name'],username:self.data['username'],password:self.data['password']})
 				.success(function(data){
 					if(data['error']){
 					}else{
