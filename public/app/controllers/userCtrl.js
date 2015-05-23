@@ -19,7 +19,7 @@ angular.module('userCtrl', ['userService'])
 				});
 		};
 	})
-	.controller('userEdit', function (User, $routeParams, $scope, $q) {
+	.controller('userEdit', function (User, $routeParams, $scope, $q, $location) {
 		var vm = this;
 		if ($routeParams['user_id']) {
 			vm.type = 'edit';
@@ -56,14 +56,6 @@ angular.module('userCtrl', ['userService'])
 		      readFile( element.files[0] )
 		      	.then(function(values) {
               $scope.imageSrc = values;
-              /*setTimeout( function(){
-              	ias = $('img.edit-avatar-img').imgAreaSelect({
-						      fadeSpeed: 400, handles: true, instance: true,
-						      imageWidth: 500, imageHeight: 750
-						    });
-						    ias.setOptions({ show: true, x1: 199, y1: 149, x2: 200, y2: 150 });
-				        ias.animateSelection(125, 75, 275, 225, 'slow');
-              }, 10 )*/
               vm.ias = $('img.edit-avatar-img').imgAreaSelect({
 					      fadeSpeed: 400, handles: true, instance: true,
 					      imageWidth: 500, imageHeight: 750
@@ -90,14 +82,14 @@ angular.module('userCtrl', ['userService'])
 				vm.processing = true;
 				vm.message = '';
 				vm.userData.avatar = vm.getAvatarData();
-
-				// console.log('vm.userData', vm.userData);return;
-
+				// return;
 				User.update($routeParams.user_id, vm.userData)
 					.success(function (data) {
 						vm.processing = false;
 						vm.userData = {};
 						vm.message = data.message;
+						// Clear circum
+						$location.path('/users');
 					});
 			};
 		} else {
