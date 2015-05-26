@@ -1,0 +1,20 @@
+<div class="row col-md-6 col-md-offset-3">
+	<div class="jumbotron">
+		<h1>忘记密码</h1>
+		<form ng-submit="forget.post()">
+			<div class="form-group">
+				<label>email</label>
+				<input type="email" class="form-control" ng-model="forget.data.username" ng-change="forget.userNameChange()">
+			</div>
+			<div class="alert alert-danger" ng-if="forget.error">
+				{{ forget.error }}
+			</div>
+			<div class="alert alert-danger" ng-if="forget.success">
+				{{ forget.success }}
+			</div>
+			<button type="submit" class="btn btn-block btn-primary" ng-disabled="forget.data.btnDisabled">
+				<span ng-bind = "forget.data.btnValue"></span>
+			</button>
+		</form>
+	</div>
+</div>

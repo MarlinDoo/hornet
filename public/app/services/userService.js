@@ -25,5 +25,8 @@ angular.module('userService', [])
     userFactory.registerSave = function(userData){
       return $http.post('/api/register/',userData);
     }
+    userFactory.forget = function(userData){
+      return $http.put('/api/forget/',userData)
+    }
     return userFactory;
   });

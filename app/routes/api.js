@@ -7,6 +7,7 @@ var _ 				 = require('underscore');
 var nodemailer = require('nodemailer');
 var moment 		 = require('moment');
 
+var transporter = nodemailer.createTransport();
 var avatar     = require('../lib/tietuku.io');
 var superSecret = config.secret;
 module.exports = function(app, express) {
@@ -89,7 +90,6 @@ module.exports = function(app, express) {
 				user.save(function(err) {
 					if (err) res.send(err);
 					res.json({ message: 'User updated!' });
-					console.log(user,'这个是什么保存')
 				});
 			});
 		})
@@ -136,7 +136,7 @@ module.exports = function(app, express) {
 						if(!error){
 						}
 					});
-					var transporter = nodemailer.createTransport();
+
 				  transporter.sendMail({
 				    from: 'zhailei2011@gmail.com',
 				    to: req.body["username"],
@@ -206,6 +206,26 @@ module.exports = function(app, express) {
   	})
 		.put(function(req,res){
 			console.log('xxxx');
+		})
+	apiRouter.route('/forget/')
+		.put(function(req,res){
+			User.find(_.extend({},req.body), function(err, user) {
+				if (err) res.send(err);
+				var transporter = nodemailer.createTransport();
+				transporter.sendMail({
+					from: 'zhailei2011@gmail.com',
+					to: req.body["username"],
+					subject: '修正密码',
+					text: req.headers.origin+'/forget/'+user[0]['_id']
+				},function(error,info){
+					if(error){
+						res.json({ error: error });
+					}else{
+						res.json(_.extend({ message: 'User created!'}));
+					}
+				});
+			});
+
 		})
 	apiRouter.get('/me', function(req, res) {
 		res.send(req.decoded);

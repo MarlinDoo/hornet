@@ -1,5 +1,5 @@
 <div class="row col-md-6 col-md-offset-3">
-	
+
 	<div class="alert alert-info">
 		<p>Test Info</p>
 		<p><strong>Username</strong>: chris</p>
@@ -7,10 +7,10 @@
 	</div>
 
 	<div class="jumbotron">
-		<h1>Login</h1>		
+		<h1>Login</h1>
 
 		<form ng-submit="login.doLogin()">
-			
+
 			<div class="form-group">
 				<label>Username</label>
 				<input type="email" class="form-control" ng-model="login.loginData.username">
@@ -30,7 +30,9 @@
 				<span ng-if="login.processing" class="spinner"><span class="glyphicon glyphicon-repeat"></span></span>
 			</button>
 
+			<a href="/forget"><div class="forget-password">忘记密码</div></a>
+
 		</form>
 	</div>
-	
+
 </div>

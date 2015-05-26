@@ -50,7 +50,7 @@ gulp.task('watch', function() {
 //       pass: 'zhailei1230321'
 //   }
 // });
-// 
+//
 var transporter = nodemailer.createTransport();
 gulp.task('email',function(){
   // transporter.sendMail({

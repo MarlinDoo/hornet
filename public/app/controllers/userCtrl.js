@@ -213,4 +213,67 @@ angular.module('userCtrl', ['userService'])
 				})
 		}
 
+	})
+	.controller('forget',function(User,$scope,$location,$routeParams){
+		var self = this;
+		this.data = {
+			btnValue:'发送邮件',
+			btnDisabled:true
+		}
+		var re = /\w+((-w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]{2,}/ ;
+		this.userNameChange = function(){
+			if(re.test(self.data['username'])){
+				self.data['btnDisabled'] = false;
+			}else{
+				self.data['btnDisabled'] = true;
+			}
+			self.error = ''
+		}
+		this.post = function(){
+			self.data['btnDisabled'] = true
+			self.data['btnValue'] = '发送中……'
+			User.forget({
+				username:self.data['username'],
+			}).success(function(data){
+					if(data['error']){
+					}else{
+						self.success ='发送邮件成功'
+						self.data['btnDisabled'] = false
+						self.data['btnValue'] = '发送邮件'
+					}
+				})
+		}
+	})
+	.controller('passwd',function(User,$scope,$location,$timeout,$routeParams){
+
+		var self = this;
+		this.data = {
+			btnValue:'保存',
+			btnDisabled:true,
+			password:''
+		}
+		$scope.data = this.data
+		$scope.$watch('data["password"]+data["confrimPassword"]',function(newV,oldV){
+			if(self.data['password'] && self.data['password']!=""&& self.data['confrimPassword'] && self.data['confrimPassword']!='' && self.data['password']== self.data['confrimPassword']){
+				self.data['btnDisabled'] = false
+			}else{
+				self.data['btnDisabled'] = true
+			}
+		})
+
+		this.post = function(){
+			self.data['btnDisabled'] = true
+			self.data['btnValue'] = '提交中……'
+			User.update($routeParams['id'],{
+				password:self.data['password']
+			}).success(function(data){
+				if(data.error){}
+				else{
+					self.success = '修改成功'
+					$timeout(function(){
+						$location.path('/login')
+					},1000);
+				}
+			});
+		}
 	});
