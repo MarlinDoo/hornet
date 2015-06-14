@@ -239,5 +239,27 @@ module.exports = function(app, express) {
 				}
 			})
 		})
+		.post(function(req,res){
+			Org.find({name:req.body["name"]},function(error,data){
+				if(error) res.json({error:error})
+				else{
+					if(data.length!=0){
+						res.json({error: '已存在用户'});
+					}else{
+						var org = new Org({
+							name:req.body["name"],
+							category:req.body['category'],
+							create_at:moment().format('X')
+						});
+						org.save(function(error,data){
+							if(!error){
+								res.json(data)
+							}else{
+							}
+						});
+					}
+				}
+			})
+		})
 	return apiRouter;
 }
