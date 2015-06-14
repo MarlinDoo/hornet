@@ -48,6 +48,16 @@ angular.module('app.routes', ['ngRoute'])
 				templateUrl:'app/views/pages/setPassword.html',
 				controller:'passwd',
 				controllerAs:'passwd'
+			})
+			.when('/org',{
+				templateUrl:'app/views/pages/org/org.html',
+				controller:'orgController',
+				controllerAs:'orgController'
+			})
+			.when('/org/create',{
+				templateUrl:'app/views/pages/org/create.html',
+				controller:'orgEdit',
+				controllerAs:'org'
 			});
 		$locationProvider.html5Mode(true);
 	});

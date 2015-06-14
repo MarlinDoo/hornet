@@ -245,7 +245,6 @@ angular.module('userCtrl', ['userService'])
 		}
 	})
 	.controller('passwd',function(User,$scope,$location,$timeout,$routeParams){
-
 		var self = this;
 		this.data = {
 			btnValue:'保存',

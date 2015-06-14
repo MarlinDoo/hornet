@@ -1,12 +1,12 @@
 var bodyParser = require('body-parser'); 	// get body-parser
 var User       = require('../models/user');
 var Token 		 = require('../models/Token');
+var Org 		 = require('../models/Org');
 var jwt        = require('jsonwebtoken');
 var config     = require('../../config');
 var _ 				 = require('underscore');
 var nodemailer = require('nodemailer');
 var moment 		 = require('moment');
-
 var transporter = nodemailer.createTransport();
 var avatar     = require('../lib/tietuku.io');
 var superSecret = config.secret;
@@ -230,5 +230,14 @@ module.exports = function(app, express) {
 	apiRouter.get('/me', function(req, res) {
 		res.send(req.decoded);
 	});
+	apiRouter.route('/org/')
+		.get(function(req,res){
+			Org.find({},function(error,list){
+				if(error) res.send(error)
+				else{
+					res.json(list);
+				}
+			})
+		})
 	return apiRouter;
 }
