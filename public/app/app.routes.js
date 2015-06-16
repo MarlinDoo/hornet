@@ -38,6 +38,26 @@ angular.module('app.routes', ['ngRoute'])
 				templateUrl:"app/views/pages/registerInfo.html",
 				controller :'registerInfo',
 				controllerAs: 'register'
+			})
+			.when('/forget',{
+				templateUrl:'app/views/pages/forget.html',
+				controller:'forget',
+				controllerAs:'forget'
+			})
+			.when('/forget/:id',{
+				templateUrl:'app/views/pages/setPassword.html',
+				controller:'passwd',
+				controllerAs:'passwd'
+			})
+			.when('/org',{
+				templateUrl:'app/views/pages/org/org.html',
+				controller:'orgController',
+				controllerAs:'orgController'
+			})
+			.when('/org/create',{
+				templateUrl:'app/views/pages/org/create.html',
+				controller:'orgEdit',
+				controllerAs:'org'
 			});
 		$locationProvider.html5Mode(true);
 	});

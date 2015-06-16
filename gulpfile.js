@@ -50,7 +50,7 @@ gulp.task('watch', function() {
 //       pass: 'zhailei1230321'
 //   }
 // });
-// 
+//
 var transporter = nodemailer.createTransport();
 gulp.task('email',function(){
   // transporter.sendMail({
@@ -105,6 +105,6 @@ gulp.task('serve',['css','nodemon'],function(){
     proxy: 'http://127.0.0.1:8080',
     port:4000
   });
-  gulp.watch('public/assets/css/style.less',['css',reload]);
+  gulp.watch('public/assets/css/style.less',['css']);
 });
 gulp.task('default', ['serve']);
