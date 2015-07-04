@@ -13,12 +13,6 @@ var superSecret = config.secret;
 module.exports = function(app, express) {
 	var apiRouter = express.Router();
 
-	app.get('/', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-	});
-
 	apiRouter.post('/authenticate', function(req, res) {
 	  User.findOne({
 	    username: req.body.username
